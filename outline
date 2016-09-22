@@ -1,0 +1,53 @@
+- representation / abstraction layers
+    - ideias -> palavras -> fonemas -> sistema de escrita
+    - sistemas de escrita:
+        - logossilábico (logográfico + silábico): hieroglifos, sistemas chineses
+        - alfabético: Português
+        - abjad: Hebraico
+        - etc.
+    - como representar texto em meios não gráficos?
+    - mais especificamente, como representar no computador, se só entende números?
+        - ENCODING!
+        - literalmente codificação
+        - mapeia caracteres -> números -> bits
+            - muitas formas diferentes de fazer isso
+            - cada forma é um encoding diferente
+
+- exemplos de encoding:
+    - A = 1, B = 2, C = 3, ..., Z = ?
+    - Z = 1, Y = 2, X = 3, ..., A = 1?
+    - ascii, utf-8, iso-8859-*, windows-1252
+    - Transformar de caracteres para números: codificar (encode)
+    - Transformar de números para caracteres: decodificar (decode)
+
+
+- python 2:
+    - unicode vs str
+        - unicode representa caracteres
+        - str representa sequencias de bytes
+          (que em geral podem ser renderizadas como texto, mas podem ser
+           usadas para outro propósito, e.g. protocolos binários de comunicação)
+
+- python 3:
+    - str vs bytestring
+        - str no py3 ~== unicode no py2
+        - bytestring == str ?
+
+
+Problemas comuns:
+    - UnicodeEncodeError: encode utilizado não suporta o caracter a ser codificado
+        - Mais comum em py2
+        - geralmente na hora de na hora de escrever um arquivo 
+        - arquivos esperam strings, unicodes precisam ser codificados
+        - se disser nada, python escolhe implicitamente ascii
+        - codecs.open() ou .encode() explícito antes
+    - iso-8859-1 (aka latin-1) vs windows-1252
+        - São iguais exceto por 32 caracteres
+        - Galera geralmente não sabe a diferença e coloca windows-1252 como iso-8859-1
+        - Chegou ao ponto de hoje em dia o padrão HTML5 recomendar que um html
+          declarado como iso-8859-1 seja tratado como windows-1252
+        - se conhece não conhece a fonte, vai na fé ¯\_(ツ)_/¯
+    - Caracteres estranhos: 
+        - Texto decodificado com o encoding errado
+        - Descubra o encoding certo ¯\_(ツ)_/¯
+
