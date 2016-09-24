@@ -1,0 +1,321 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[cache=false]{minted}
+\usepackage{hyperref}
+
+\usetheme{metropolis}
+\graphicspath{{imgs/}}
+
+\begin{document}
+\title{Intensivão de Encoding}
+\subtitle{Ou: How I learned to stop worrying and love Python 3}
+\author{Elias Tandel}
+
+\frame{\titlepage}
+
+\frame{\frametitle{Camadas de Abstração}
+}
+
+\frame{\frametitle{Camadas de Abstração}
+    E se eu quiser me comunicar com alguém do futuro?
+    
+    Ou que esteja longe?
+}
+
+\frame{\frametitle{Sistemas de Escrita}
+    \begin{itemize}
+        \item alfabético: Português
+        \item logossilábico (logográfico + silábico): hieroglifos, sistemas chineses
+        \item abjad: Hebraico
+        \item etc.
+    \end{itemize}
+}
+
+\frame{\frametitle{Sistemas de Escrita}
+    Mas meu computador só entende números*; como faço pra guardar texto nele?
+}
+
+\frame{\frametitle{Sistemas de Escrita}
+    Encoding!
+}
+
+\frame{\frametitle{Encoding!}
+    \begin{itemize}
+        \item encoding = codificação \pause
+        \item mapeia caracteres \( \rightarrow \) números \( \rightarrow \) bits \pause
+        \begin{itemize}
+            \item muitas formas diferentes de fazer isso
+            \item cada forma é um encoding diferente
+        \end{itemize}
+    \end{itemize}
+}
+
+\frame{\frametitle{Exemplo}
+    \begin{itemize}
+        \item Direto: A = 1, B = 2, C = 3, ..., Z = 26
+        \item Indireto: Z = 1, Y = 2, X = 3, ..., A = 26  \pause
+        \item F O R A T E M E R \pause
+        \item 6 15 18 1 20 5 13 5 18 \pause
+        \item 21 12 9 26 7 22 14 22 9
+    \end{itemize}
+}
+
+\frame{\frametitle{Charsets - ASCII}
+    \begin{itemize}
+        \item American Standard Code for Information Interchange
+        \item Representa caracteres comuns no Inglês + controle
+        \item 0 - 128
+    \end{itemize}
+}
+
+\frame{\frametitle{Charsets - ISO-8859}
+    \begin{itemize}
+        \item ISO-8859: Família de encodings de 8 bits que expandem o ASCII: \pause
+            \begin{itemize}
+                \item iso-8859-1 / latin-1: Europa Ocidental (a gente! o/) \pause
+                \item iso-8859-2 / latin-2: Europa Central
+                \item ...
+                \item iso-8859-11 : Tailandês
+                \item ...
+                \item iso-8859-14 / latin-8 : Gaélico(s), Bretão etc.
+                \item ...
+            \end{itemize}
+    \end{itemize}
+}
+
+\frame{\frametitle{Problema:}
+    \begin{itemize}
+        \item Texto que misture caracteres em charsets diferentes \(=\) caos
+        \item Às vezes um charset para cada língua / alfabeto etc.
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode!}
+    \begin{itemize}
+        \item Unicode: Padrão internacional que tenta representar \textbf{todos} os caracteres (até emojis!) \pause
+        \item Vai de 0 a 4\_294\_967\_296 (bem mais que 8 bits) \pause
+        \item Bem mais que encoding! Ligaduras, combinações de diacríticos, ordem de leitura etc.
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode!}
+    \begin{itemize}
+        \item Caracteres são a menor unidade de texto.
+            \begin{itemize}
+                \item "e", "é", "ç", "ã" e "æ" são caracteres
+            \end{itemize} \pause
+        \item Cada caracter tem um número associado chamado de \textbf{code point} \pause
+        \item A tabela de code points é única, mas as representações binárias são diversas:
+            \begin{itemize}
+                \item Normalização: "é" vs "e" + "\'"  \pause
+                \item Unicode Transformation Formats
+            \end{itemize}
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode Transformation Formats - UTF-32}
+    \begin{itemize}
+        \pause
+        \item UTF-32 usa sempre 4 bytes para representar qualquer code point \pause
+            \item Vantagem: fácil "pular" para qualquer caracter \pause
+            \item Desvantagem: Gasta memória à toa
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode Transformation Formats - UTF-16}
+    \begin{itemize}
+        \item UTF-16 usa 2 xor 4 bytes para representar um code point \pause
+        \item Criado mais por questões de compatibilidade \pause
+        \item Hoje em dia usado só por Java* e JS**
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode Transformation Formats - UTF-8}
+    \begin{itemize}
+        \pause
+        \item Criado por Rob Pike e Ken Thompson \pause
+        \item UTF-8 usa de 1 a 4 bytes para representar um code point \pause
+        \item Vantagens: Economiza bastante espaço e é compatível com ascii \pause
+        \item Desvantagem: "Pulos" são O(n)
+    \end{itemize}
+}
+
+\frame{\frametitle{Unicode Transformation Formats}
+    https://en.wikipedia.org/wiki/File:Utf8webgrowth.svg
+    \includegraphics[width=\textwidth]{Utf8webgrowth}
+}
+
+\frame{\frametitle{Python!}
+    \pause
+    \begin{itemize}
+        \item Python 2:
+        \begin{itemize}
+            \item \texttt{unicode}: tipo que representa sequências de \textbf{caracteres}
+                \begin{itemize}
+                    \item \texttt{u'literal unicode'}
+                \end{itemize} \pause
+            \item \texttt{str}: tipo que representa sequências de \textbf{bytes}
+                \begin{itemize}
+                    \item \texttt{'literal str'}
+                \end{itemize} \pause
+        \end{itemize}
+
+        \item Python 3:
+        \begin{itemize}
+            \item \texttt{str}: tipo que representa sequências de \textbf{caracteres}
+                \begin{itemize}
+                    \item \texttt{'literal str'}
+                \end{itemize} \pause
+            \item \texttt{bytes}: tipo que representa sequências de \textbf{bytes}
+                \begin{itemize}
+                    \item \texttt{b'literal str'}
+                \end{itemize}
+        \end{itemize}
+    \end{itemize}
+}
+
+\frame{\frametitle{Python!}
+    \begin{itemize}
+        \item Python 2:
+        \begin{itemize}
+            \item \texttt{valor.encode()}: \texttt{str} \(\rightarrow\) \texttt{unicode}
+            \item \texttt{valor.decode()}: \texttt{unicode} \(\rightarrow\) \texttt{str}
+        \end{itemize} \pause
+
+        \item Python 3:
+        \begin{itemize}
+            \item \texttt{valor.encode()}: \texttt{str} \(\rightarrow\) \texttt{bytes}
+            \item \texttt{valor.decode()}: \texttt{bytes} \(\rightarrow\) \texttt{str}
+        \end{itemize}
+    \end{itemize}
+}
+
+\frame{\frametitle{Ou seja,}
+    \begin{itemize}
+        \item encode / codificar: transformar caracteres em números
+        \item F O R A T E M E R \(\rightarrow\) 6 15 18 1 20 5 13 5 18 \pause
+
+        \item decode / decodificar: transformar números em caracteres
+        \item F O R A T E M E R \(\leftarrow\) 21 12 9 26 7 22 14 22 9
+    \end{itemize}
+}
+
+\frame{\frametitle{Remover Diacríticos}
+    \begin{itemize}
+        \item Problema: Remover diacríticos de um texto em português
+        \item Coração \(\rightarrow\) Coracao \pause
+
+        \item Solução:
+            \begin{itemize}
+                \item 1) Normalizar NFKD
+                \item 2) Transformar para ascii ignorando os erros
+            \end{itemize}
+    \end{itemize}
+}
+
+\begin{frame}[fragile]
+    \frametitle{Remover Diacríticos - Python 2 e 3}
+    \inputminted{python}{removediacritic.py}
+\end{frame}
+
+
+\frame{\frametitle{\texttt{UnicodeDecodeError}}
+    \begin{itemize}
+        \item Problema: \texttt{.decode()} lança UnicodeDecodeError \pause
+        \item Causa: Você está tentando ler usando o encoding errado \pause
+        \item Solução: Descubra o encoding certo ou tente vários até achar
+    \end{itemize}
+}
+
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{UnicodeDecodeError} - Python 2 e 3}
+    \inputminted{python}{unicodedecodeerror.py}
+\end{frame}
+
+
+\frame{\frametitle{\texttt{UnicodeEncodeError} - pt 1}
+    \begin{itemize}
+        \item Problema: \texttt{.encode()} lança UnicodeEncodeError \pause
+        \item Causa: Existe um caracter que não é mapeado no encoding usado \pause
+        \item Solução: Ache um encoding que suporte esse caracter (se possível)
+    \end{itemize}
+}
+
+
+\frame{\frametitle{\texttt{UnicodeEncodeError} - pt 2}
+    \begin{itemize}
+        \item Problema: \texttt{file.write()} lança UnicodeEncodeError \pause
+        \item Causa: 
+            \begin{itemize}
+                \item Você está usando Python 2 \pause
+                \item Você está tentando escrever um objeto unicode \pause
+                \item Arquivos são sequencias de bytes \pause
+                \item Então Python precisa fazer encode \pause
+                \item Você não disse nada, Python assumiu ascii \pause
+                \item Vide pt 1 \pause
+            \end{itemize}
+    \end{itemize}
+}
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{UnicodeEncodeError} - pt 2 - Solução 1}
+    \inputminted{python}{writeencodeerror1.py}
+\end{frame}
+
+
+\begin{frame}[fragile]
+    \frametitle{\texttt{UnicodeEncodeError} - pt 2 - Solução 2}
+    \inputminted{python}{writeencodeerror2.py}
+\end{frame}
+
+
+\frame{\frametitle{Windows-1252}
+    \begin{itemize}
+        \item Problema: Windows-1252 vs ISO-8859-1 \pause
+        \item Windows-1252 é parte de outra familia que extende o ASCII \pause
+        \item Windows-1252 é quase igual ao latin-1 exceto por 32 caracteres
+        \item A galera não sabe a diferença e acha que são a mesma coisa \pause
+        \item "Solução":
+            \begin{itemize}
+                    \item HTML5 recomenda que ISO-8859-1 seja tratado como windows-1252 \pause
+                    \item Trate do jeito certo em outras situações \pause
+                    \item Boa sorte
+            \end{itemize}
+
+    \end{itemize}
+}
+
+
+\frame{\frametitle{Lições para a vida}
+    \begin{itemize}
+        \item Use Python 3 \pause
+        \item \textbf{Use Python 3} \pause
+        \item Na dúvida, use utf-8 \pause
+        \item Decodifique assim que possível \pause
+        \item Codifique só quando necessário \pause
+        \item Seja consistente! (i.e. não misture tipos de string) \pause
+        \item Use Python 3 \pause
+    \end{itemize}
+}
+
+
+
+\frame{\frametitle{Obrigado}
+    \begin{itemize}
+        \item @etandel
+        \item \href{https://etandel.xyz}{etandel.xyz}
+        \item elias.tandel@gmail
+        \item elias@onyo.com
+    \end{itemize}
+
+}
+
+\frame{\frametitle{Obrigado}
+    \begin{itemize}
+        \item \href{https://github.com/etandel/astro-distance}{Código da palestra}
+        \item \href{https://speakerdeck.com/etandel/medindo-distancias-astronomicas}{Speaker Deck}
+    \end{itemize}
+}
+
+\end{document}
