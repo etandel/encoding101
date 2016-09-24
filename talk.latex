@@ -14,6 +14,7 @@
 \frame{\titlepage}
 
 \frame{\frametitle{Camadas de Abstração}
+    \includegraphics[width=\textwidth]{abstraction}
 }
 
 \frame{\frametitle{Camadas de Abstração}
