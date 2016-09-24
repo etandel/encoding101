@@ -314,7 +314,7 @@
 
 \frame{\frametitle{Obrigado}
     \begin{itemize}
-        \item \href{https://github.com/etandel/astro-distance}{Código da palestra}
+        \item \href{https://github.com/etandel/encoding101}{Código da palestra}
         \item \href{https://speakerdeck.com/etandel/medindo-distancias-astronomicas}{Speaker Deck}
     \end{itemize}
 }
