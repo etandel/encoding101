@@ -215,7 +215,7 @@
 
 \begin{frame}[fragile]
     \frametitle{Remover Diacríticos - Python 2 e 3}
-    \inputminted{python}{removediacritic.py}
+    \inputminted{python}{code/removediacritic.py}
 \end{frame}
 
 
@@ -230,7 +230,7 @@
 
 \begin{frame}[fragile]
     \frametitle{\texttt{UnicodeDecodeError} - Python 2 e 3}
-    \inputminted{python}{unicodedecodeerror.py}
+    \inputminted{python}{code/unicodedecodeerror.py}
 \end{frame}
 
 
@@ -260,13 +260,13 @@
 
 \begin{frame}[fragile]
     \frametitle{\texttt{UnicodeEncodeError} - pt 2 - Solução 1}
-    \inputminted{python}{writeencodeerror1.py}
+    \inputminted{python}{code/writeencodeerror1.py}
 \end{frame}
 
 
 \begin{frame}[fragile]
     \frametitle{\texttt{UnicodeEncodeError} - pt 2 - Solução 2}
-    \inputminted{python}{writeencodeerror2.py}
+    \inputminted{python}{code/writeencodeerror2.py}
 \end{frame}
 
 
