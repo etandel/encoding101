@@ -179,8 +179,8 @@
     \begin{itemize}
         \item Python 2:
         \begin{itemize}
-            \item \texttt{valor.encode()}: \texttt{str} \(\rightarrow\) \texttt{unicode}
-            \item \texttt{valor.decode()}: \texttt{unicode} \(\rightarrow\) \texttt{str}
+            \item \texttt{valor.encode()}: \texttt{unicode} \(\rightarrow\) \texttt{str}
+            \item \texttt{valor.decode()}: \texttt{str} \(\rightarrow\) \texttt{unicode}
         \end{itemize} \pause
 
         \item Python 3:
