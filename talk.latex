@@ -65,7 +65,7 @@
     \begin{itemize}
         \item American Standard Code for Information Interchange
         \item Representa caracteres comuns no Inglês + controle
-        \item 0 - 128
+        \item 0 - 127
     \end{itemize}
 }
 
